@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lab1</string>
+    <string name="HelloWorld">Heisann, Verden!</string>
+    <string name="ButtonA">Knapp A</string>
+    <string name="ButtonB">Knapp B</string>
+    <string name="Counter">Teller</string>
+</resources>
