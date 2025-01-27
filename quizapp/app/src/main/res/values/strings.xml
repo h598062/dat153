@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">QuizApp</string>
     <string name="main_menu_title">The Quizzler</string>
+    <string name="button_start_quiz">Start Quiz</string>
 </resources>
