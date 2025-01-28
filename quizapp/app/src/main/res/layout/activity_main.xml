@@ -46,14 +46,31 @@
             app:strokeColor="#000000"
             app:strokeWidth="2dp" />
 
+        <Button
+            android:id="@+id/button_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:backgroundTint="#536DFE"
+            android:fontFamily="casual"
+            android:insetLeft="50dp"
+            android:insetRight="50dp"
+            android:text="@string/button_gallery"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:cornerRadius="30dp"
+            app:strokeColor="#000000"
+            app:strokeWidth="2dp" />
+
         <SeekBar
-            android:id="@+id/quiz_words_selector_bar"
+            android:id="@+id/quiz_questions_amount_selector"
             style="@android:style/Widget.SeekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="100dp"
-            android:layout_marginRight="30dp" />
+            android:layout_marginRight="30dp"
+            android:max="10"
+            android:min="1" />
 
     </LinearLayout>
 

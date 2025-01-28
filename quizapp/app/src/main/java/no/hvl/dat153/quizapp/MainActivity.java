@@ -1,5 +1,8 @@
 package no.hvl.dat153.quizapp;
 
+import static no.hvl.dat153.quizapp.QuizActivity.EXTRA_QUESTION_AMOUNT;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,28 +36,37 @@ public class MainActivity extends AppCompatActivity {
 
         var poopies = this;
 
-        //SeekBar bar = findViewById(R.id.quiz_words_selector_bar);
-
         var listener = new SeekBar.OnSeekBarChangeListener() {
+            private static final String TAG = "ProgressBar";
+            int amount = 1;
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.d("ProgressBar", "onProgressChanged: " + progress);
-                Toast.makeText(poopies, "Du har valgt " + progress + " spørsmål", Toast.LENGTH_SHORT).show();
+                amount = progress;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                Log.d("ProgressBar", "onStartTrackingTouch: ");
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.d("ProgressBar", "onStopTrackingTouch: ");
+                Log.d(TAG, "onStopTrackingTouch: " + amount);
+                Toast.makeText(poopies, "Du har valgt " + amount + " spørsmål", Toast.LENGTH_SHORT).show();
             }
         };
 
-        //bar.setOnSeekBarChangeListener(listener);
+        binding.quizQuestionsAmountSelector.setOnSeekBarChangeListener(listener);
 
-        binding.quizWordsSelectorBar.setOnSeekBarChangeListener(listener);
+        binding.buttonStartQuiz.setOnClickListener(v -> {
+            Toast.makeText(this, "Quiz started!", Toast.LENGTH_SHORT).show();
+
+            // start the quiz activity
+            Intent intent = new Intent(this, QuizActivity.class);
+
+            intent.putExtra(EXTRA_QUESTION_AMOUNT, listener.amount);
+            startActivity(intent);
+
+        });
     }
 }
