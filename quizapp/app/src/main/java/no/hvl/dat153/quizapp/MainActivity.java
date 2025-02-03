@@ -51,12 +51,15 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonStartQuiz.setOnClickListener(v -> {
             Toast.makeText(this, "Quiz started!", Toast.LENGTH_SHORT).show();
 
-            // start the quiz activity
             Intent intent = new Intent(this, QuizActivity.class);
-
             intent.putExtra(EXTRA_QUESTION_AMOUNT, questionAmount);
             startActivity(intent);
 
+        });
+
+        binding.buttonGallery.setOnClickListener(v -> {
+            Intent intent = new Intent(this, GalleryActivity.class);
+            startActivity(intent);
         });
     }
 
