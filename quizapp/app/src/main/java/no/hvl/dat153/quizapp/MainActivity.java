@@ -20,6 +20,16 @@ import no.hvl.dat153.quizapp.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private static final String TAG = "MainActivity";
+    private Integer questionAmount = 1;
+
+    public Integer getQuestionAmount() {
+        return questionAmount;
+    }
+
+    public void setQuestionAmount(Integer questionAmount) {
+        this.questionAmount = questionAmount;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,27 +44,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        var poopies = this;
-
-        var listener = new SeekBar.OnSeekBarChangeListener() {
-            private static final String TAG = "ProgressBar";
-            int amount = 1;
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                amount = progress;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.d(TAG, "onStopTrackingTouch: " + amount);
-                Toast.makeText(poopies, "Du har valgt " + amount + " spørsmål", Toast.LENGTH_SHORT).show();
-            }
-        };
+        var listener = getListener(this);
 
         binding.quizQuestionsAmountSelector.setOnSeekBarChangeListener(listener);
 
@@ -64,9 +54,32 @@ public class MainActivity extends AppCompatActivity {
             // start the quiz activity
             Intent intent = new Intent(this, QuizActivity.class);
 
-            intent.putExtra(EXTRA_QUESTION_AMOUNT, listener.amount);
+            intent.putExtra(EXTRA_QUESTION_AMOUNT, questionAmount);
             startActivity(intent);
 
         });
+    }
+
+    private SeekBar.OnSeekBarChangeListener getListener(MainActivity mainActivity) {
+        return new SeekBar.OnSeekBarChangeListener() {
+            private final MainActivity parentActivity = mainActivity;
+            private static final String TAG = "ProgressBar";
+
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                parentActivity.setQuestionAmount(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.d(TAG, "onStopTrackingTouch: " + parentActivity.getQuestionAmount());
+                Toast.makeText(parentActivity, "Du har valgt " + parentActivity.getQuestionAmount() + " spørsmål", Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }
