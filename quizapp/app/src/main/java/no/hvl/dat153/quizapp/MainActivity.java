@@ -15,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.List;
+
 import no.hvl.dat153.quizapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Gallery.getInstance().addQuestions(
+                new QuizQuestion(R.drawable.feet, "Feet", "Hat", "Toes", "test", "toots", "bird", "cristoffmisbruker", "føtter", "ting", "som", "kan", "funke", "superlang", "tiss", "ligma", "balls"),
+                new QuizQuestion(R.drawable.bird, "fågel", "Feet", "fugl", "Bird", "BIRD", "bird", "B|RD", "B1RD"),
+                new QuizQuestion(R.drawable.cok, "Cok", "Coke", "Coca coke", "Cola", "Pebis", "Bepis", "coca cola"),
+                new QuizQuestion(R.drawable.giiislefoss, "giiislefoss", "mann", "gisle", "foss", "gislefoss", "gissel", "kristian")
+        );
+
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -45,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         var listener = getListener(this);
+
+        binding.quizQuestionsAmountSelector.setMax(Gallery.getInstance().getQuestions().size());
 
         binding.quizQuestionsAmountSelector.setOnSeekBarChangeListener(listener);
 
@@ -61,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GalleryActivity.class);
             startActivity(intent);
         });
+
     }
 
     private SeekBar.OnSeekBarChangeListener getListener(MainActivity mainActivity) {
