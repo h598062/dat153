@@ -35,16 +35,11 @@
             android:layout_height="wrap_content"
             android:text="@string/addGalleryButton" />
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/galleryItemContainer"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/galleryItemContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
+            android:layout_height="wrap_content"
+            android:isScrollContainer="true" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

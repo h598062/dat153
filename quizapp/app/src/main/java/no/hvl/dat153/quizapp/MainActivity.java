@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
                 new QuizQuestion(R.drawable.feet, "Feet", "Hat", "Toes", "test", "toots", "bird", "cristoffmisbruker", "føtter", "ting", "som", "kan", "funke", "superlang", "tiss", "ligma", "balls"),
                 new QuizQuestion(R.drawable.bird, "fågel", "Feet", "fugl", "Bird", "BIRD", "bird", "B|RD", "B1RD"),
                 new QuizQuestion(R.drawable.cok, "Cok", "Coke", "Coca coke", "Cola", "Pebis", "Bepis", "coca cola"),
-                new QuizQuestion(R.drawable.giiislefoss, "giiislefoss", "mann", "gisle", "foss", "gislefoss", "gissel", "kristian")
+                new QuizQuestion(R.drawable.giiislefoss, "giiislefoss", "mann", "gisle", "foss", "gislefoss", "gissel", "kristian"),
+                new QuizQuestion(R.drawable.pus, "søt", "Feet", "Hatt", "hatt", "hætt", "hætta", "hætten"),
+                new QuizQuestion(R.drawable.little_face, "dumb", "Feet", "Hatt", "hatt", "hætt", "hætta", "hætten"),
+                new QuizQuestion(R.drawable.waaaaaaaaaah, "waaaaaaaah", "Feet", "Hatt", "hatt", "hætt", "hætta", "hætten")
         );
 
 

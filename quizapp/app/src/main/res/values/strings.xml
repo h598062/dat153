@@ -8,4 +8,16 @@
     <string name="addGalleryButton">Add new Image</string>
     <string name="default_CorrectAnswer">CorrectAnswer</string>
     <string name="default_InorrectAnswer">InorrectAnswer</string>
+    <string name="image_dialog_camera">Take new Picture</string>
+    <string name="image_dialog_select_gallery">Select image from Phone Gallery</string>
+    <string name="addImageTitle">Add image from phone gallery, or take a new picture with camera?</string>
+    <string name="addImageFromGallery">Add from Gallery</string>
+    <string name="addImageFromCamera">Take new picture</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="newImageCorrectAnswer">Input the correct answer for this image below</string>
+    <string name="hintNewImageCorrectAnswer">The correct answer</string>
+    <string name="newImageIncorrectAnswers">Input incorrect answers below</string>
+    <string name="hintNewImageIncorrectAnswers">Incorrect answer</string>
+    <string name="newQuizItemSubmit">Submit new Quiz Item</string>
 </resources>
