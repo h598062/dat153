@@ -1,8 +1,7 @@
-package no.hvl.dat153.quizapp;
+package no.hvl.dat153.quizapp.quiz;
 
 import android.os.Bundle;
 
-import androidx.annotation.IntegerRes;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;

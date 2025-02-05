@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp;
+package no.hvl.dat153.quizapp.gallery;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import no.hvl.dat153.quizapp.help.Gallery;
+import no.hvl.dat153.quizapp.help.QuizQuestion;
 import no.hvl.dat153.quizapp.databinding.AddQuestionTextAnswersFragmentBinding;
-import no.hvl.dat153.quizapp.databinding.FragmentQuestionBinding;
 
 public class NewQuestionTextFragment extends DialogFragment {
 

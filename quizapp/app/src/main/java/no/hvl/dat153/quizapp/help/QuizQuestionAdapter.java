@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp;
+package no.hvl.dat153.quizapp.help;
 
 import android.graphics.Color;
 import android.net.Uri;
@@ -15,6 +15,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import no.hvl.dat153.quizapp.R;
 
 public class QuizQuestionAdapter extends RecyclerView.Adapter<QuizQuestionAdapter.ViewHolder> {
     private final List<QuizQuestion> quizQuestions;

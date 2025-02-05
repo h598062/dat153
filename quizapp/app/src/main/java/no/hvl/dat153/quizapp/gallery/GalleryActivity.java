@@ -1,22 +1,17 @@
-package no.hvl.dat153.quizapp;
+package no.hvl.dat153.quizapp.gallery;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -24,10 +19,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import no.hvl.dat153.quizapp.help.Gallery;
+import no.hvl.dat153.quizapp.help.QuizQuestionAdapter;
+import no.hvl.dat153.quizapp.R;
 import no.hvl.dat153.quizapp.databinding.ActivityGalleryBinding;
 
 public class GalleryActivity extends AppCompatActivity {
@@ -64,17 +61,6 @@ public class GalleryActivity extends AppCompatActivity {
         QuizQuestionAdapter adapter = new QuizQuestionAdapter(Gallery.getInstance().getQuestions());
         rv.setAdapter(adapter);
 
-        ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                uri -> {
-                    // Handle the returned Uri
-                    Log.d(TAG, "Selected image path: " + uri);
-                    showCreateQuizQuestionDialog(uri);
-                });
-        ActivityResultLauncher<Uri> mTakePicture = registerForActivityResult(new ActivityResultContracts.TakePicture(),
-                gotSavedProperly -> {
-                    // Handle the returned Uri
-                    Log.d(TAG, "Was the image saved?: " + gotSavedProperly);
-                });
 
 
         binding.addGalleryImage.setOnClickListener(v -> {
@@ -82,10 +68,13 @@ public class GalleryActivity extends AppCompatActivity {
                     .setTitle("Add Image")
                     .setMessage("Add image from phone gallery or take a new picture?")
                     .setPositiveButton(R.string.image_dialog_select_gallery, (dialogInterface, which) -> {
-                        mGetContent.launch("image/*");
+
                     })
-                    .setNegativeButton(R.string.image_dialog_camera, (dialogInterface, which) -> {
-                        mTakePicture.launch(Uri.parse(android.os.Environment.DIRECTORY_PICTURES + "/quizapp/capture_" + System.currentTimeMillis() + ".png"));
+                    .setNeutralButton(R.string.image_dialog_camera, (dialogInterface, which) -> {
+
+                    })
+                    .setNegativeButton(R.string.image_dialog_cancel, (dialogInterface, which) -> {
+
                     })
                     .create();
             dialog.show();

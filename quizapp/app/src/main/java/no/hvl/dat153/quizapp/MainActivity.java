@@ -1,6 +1,6 @@
 package no.hvl.dat153.quizapp;
 
-import static no.hvl.dat153.quizapp.QuizActivity.EXTRA_QUESTION_AMOUNT;
+import static no.hvl.dat153.quizapp.quiz.QuizActivity.EXTRA_QUESTION_AMOUNT;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +15,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.List;
-
 import no.hvl.dat153.quizapp.databinding.ActivityMainBinding;
+import no.hvl.dat153.quizapp.help.Gallery;
+import no.hvl.dat153.quizapp.gallery.GalleryActivity;
+import no.hvl.dat153.quizapp.help.QuizQuestion;
+import no.hvl.dat153.quizapp.quiz.QuizActivity;
 
 public class MainActivity extends AppCompatActivity {
 

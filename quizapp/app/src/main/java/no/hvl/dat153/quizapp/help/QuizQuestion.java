@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp;
+package no.hvl.dat153.quizapp.help;
 
 import java.util.Random;
 

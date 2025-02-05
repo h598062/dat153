@@ -20,4 +20,5 @@
     <string name="newImageIncorrectAnswers">Input incorrect answers below</string>
     <string name="hintNewImageIncorrectAnswers">Incorrect answer</string>
     <string name="newQuizItemSubmit">Submit new Quiz Item</string>
+    <string name="image_dialog_cancel">Cancel</string>
 </resources>

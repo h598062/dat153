@@ -1,16 +1,14 @@
-package no.hvl.dat153.quizapp;
+package no.hvl.dat153.quizapp.gallery;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
+
+import no.hvl.dat153.quizapp.R;
 
 public class AddImageDialogFragment extends DialogFragment {
 

@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp;
+package no.hvl.dat153.quizapp.quiz;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.util.List;
-
+import no.hvl.dat153.quizapp.help.QuizQuestion;
 import no.hvl.dat153.quizapp.databinding.ActivityQuizBinding;
+import no.hvl.dat153.quizapp.help.Gallery;
 
 public class QuizActivity extends AppCompatActivity {
 
