@@ -31,6 +31,27 @@ public class MainActivity extends AppCompatActivity {
         return questionAmount;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.quizQuestionsAmountSelector.setMax(Gallery.getInstance().getQuestions().size());
+    }
+
     public void setQuestionAmount(Integer questionAmount) {
         this.questionAmount = questionAmount;
     }
@@ -38,17 +59,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Gallery.getInstance().addQuestions(
-                new QuizQuestion(R.drawable.feet, "Feet", "Hat", "Toes", "test", "toots", "bird", "cristoffmisbruker", "føtter", "ting", "som", "kan", "funke", "superlang", "tiss", "ligma", "balls"),
-                new QuizQuestion(R.drawable.bird, "fågel", "Feet", "fugl", "Bird", "BIRD", "bird", "B|RD", "B1RD"),
-                new QuizQuestion(R.drawable.cok, "Cok", "Coke", "Coca coke", "Cola", "Pebis", "Bepis", "coca cola"),
-                new QuizQuestion(R.drawable.giiislefoss, "giiislefoss", "mann", "gisle", "foss", "gislefoss", "gissel", "kristian"),
-                new QuizQuestion(R.drawable.pus, "søt", "Feet", "Hatt", "hatt", "hætt", "hætta", "hætten"),
-                new QuizQuestion(R.drawable.little_face, "dumb", "Feet", "Hatt", "hatt", "hætt", "hætta", "hætten"),
-                new QuizQuestion(R.drawable.waaaaaaaaaah, "waaaaaaaah", "Feet", "Hatt", "hatt", "hætt", "hætta", "hætten")
-        );
-
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -61,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         var listener = getListener(this);
-
-        binding.quizQuestionsAmountSelector.setMax(Gallery.getInstance().getQuestions().size());
 
         binding.quizQuestionsAmountSelector.setOnSeekBarChangeListener(listener);
 

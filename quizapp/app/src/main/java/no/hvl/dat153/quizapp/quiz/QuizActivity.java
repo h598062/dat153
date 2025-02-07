@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Locale;
+
 import no.hvl.dat153.quizapp.help.QuizQuestion;
 import no.hvl.dat153.quizapp.databinding.ActivityQuizBinding;
 import no.hvl.dat153.quizapp.help.Gallery;
@@ -27,12 +29,15 @@ public class QuizActivity extends AppCompatActivity {
     private Integer currentQuestionIndex = 0;
     private Integer correctAnswers = 0;
 
+    private QuizQuestion currentQuestion;
+
     private void loadNextQuestion() {
         if (currentQuestionIndex < questionAmount) {
-            loadQuestionFragment(Gallery.getInstance().getQuestions().get(currentQuestionIndex));
+            currentQuestion = Gallery.getInstance().getQuestions().get(currentQuestionIndex);
+            loadQuestionFragment(currentQuestion);
         } else {
             // Load the results fragment
-            Toast.makeText(this, "Du er ferdig", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.format(Locale.ENGLISH, "Du fikk %d/%d riktige svar!", correctAnswers, questionAmount), Toast.LENGTH_SHORT).show();
             finish();
         }
         currentQuestionIndex++;
@@ -64,10 +69,26 @@ public class QuizActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loadNextQuestion();
         }
+
+        getSupportFragmentManager().setFragmentResultListener(QuestionFragment.FRAGMENT_RESULT, this, (requestKey, bundle) -> {
+            String answer = bundle.getString(QuestionFragment.ARG_RESULT);
+            Log.d(TAG, "Button clicked with answer: " + answer);
+            if (currentQuestion.getCorrectAnswer().equals(answer)) {
+                correctAnswers++;
+                Toast.makeText(this, "Riktig svar!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Feil svar!", Toast.LENGTH_SHORT).show();
+            }
+            loadNextQuestion();
+        });
     }
 
     private void loadQuestionFragment(QuizQuestion q) {
-        QuestionFragment questionFragment = QuestionFragment.newInstance(q.getQuestionImage(), q.getAnswers());
+        if (q == null) {
+            Log.e(TAG, "loadQuestionFragment: Question is null");
+            return;
+        }
+        QuestionFragment questionFragment = QuestionFragment.newInstance(q.getImageUri(), q.getAnswers());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(binding.quizFragmentContainer.getId(), questionFragment);

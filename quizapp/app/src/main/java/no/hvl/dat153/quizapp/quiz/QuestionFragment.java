@@ -1,5 +1,6 @@
 package no.hvl.dat153.quizapp.quiz;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,7 +22,11 @@ public class QuestionFragment extends Fragment {
     private static final String ARG_QUIZIMAGE = "QuizImageResource";
     private static final String ARG_QUIZANSWER = "QuizAnswer";
 
-    private Integer quizImageResource;
+    public static final String ARG_RESULT = "answer";
+    public static final String FRAGMENT_RESULT = "answer";
+
+
+    private Uri quizImageUri;
     private String[] quizAnswer;
 
     private FragmentQuestionBinding binding;
@@ -34,14 +39,14 @@ public class QuestionFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param quizImageResource Resource int for the quiz image. Use R.drawable.*.
-     * @param quizAnswer        The correct and incorrect answers for the quiz.
+     * @param quizImageUri Resource int for the quiz image. Use R.drawable.*.
+     * @param quizAnswer   The correct and incorrect answers for the quiz.
      * @return A new instance of fragment QuestionFragment.
      */
-    public static QuestionFragment newInstance(Integer quizImageResource, String[] quizAnswer) {
+    public static QuestionFragment newInstance(Uri quizImageUri, String[] quizAnswer) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_QUIZIMAGE, quizImageResource);
+        args.putString(ARG_QUIZIMAGE, quizImageUri.toString());
         args.putStringArray(ARG_QUIZANSWER, quizAnswer);
         fragment.setArguments(args);
         return fragment;
@@ -51,7 +56,7 @@ public class QuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            quizImageResource = getArguments().getInt(ARG_QUIZIMAGE);
+            quizImageUri = Uri.parse(getArguments().getString(ARG_QUIZIMAGE));
             quizAnswer = getArguments().getStringArray(ARG_QUIZANSWER);
         }
     }
@@ -63,13 +68,24 @@ public class QuestionFragment extends Fragment {
         binding = FragmentQuestionBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.quizImage.setImageResource(quizImageResource);
+        binding.quizImage.setImageURI(quizImageUri);
 
         binding.buttonAnsA.setText(quizAnswer[0]);
         binding.buttonAnsB.setText(quizAnswer[1]);
         binding.buttonAnsC.setText(quizAnswer[2]);
 
+        binding.buttonAnsA.setOnClickListener(v -> clickedButton(quizAnswer[0]));
+        binding.buttonAnsB.setOnClickListener(v -> clickedButton(quizAnswer[1]));
+        binding.buttonAnsC.setOnClickListener(v -> clickedButton(quizAnswer[2]));
+
+
         return view;
+    }
+
+    private void clickedButton(String answer) {
+        Bundle result = new Bundle();
+        result.putString(ARG_RESULT, answer);
+        getParentFragmentManager().setFragmentResult(FRAGMENT_RESULT, result);
     }
 
     @Override

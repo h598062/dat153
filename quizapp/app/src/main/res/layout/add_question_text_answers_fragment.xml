@@ -9,7 +9,8 @@
     <ImageView
         android:id="@+id/newImagePreview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView

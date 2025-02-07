@@ -1,20 +1,20 @@
 package no.hvl.dat153.quizapp.help;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Gallery {
-    private static Gallery instance = null;
+    private static final Gallery instance = new Gallery();
     private final List<QuizQuestion> list;
     private Gallery() {
         this.list = new ArrayList<>();
+        Log.d("GallerySingleton", "I have Arrived!");
     }
 
     public static Gallery getInstance() {
-        if (instance == null) {
-            instance = new Gallery();
-        }
         return instance;
     }
 

@@ -1,5 +1,6 @@
 package no.hvl.dat153.quizapp.gallery;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,14 +38,13 @@ public class NewQuestionTextFragment extends DialogFragment {
         binding = AddQuestionTextAnswersFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        String imageUri = this.getArguments().getString(IMAGE_URI);
+        Uri imageUri = Uri.parse(this.getArguments().getString(IMAGE_URI));
 
-        if (this.getArguments() != null) {
-            binding.newImagePreview.setImageURI(Uri.parse(imageUri));
-        }
+        binding.newImagePreview.setImageURI(imageUri);
+
 
         binding.newQuizItemSubmit.setOnClickListener(v -> {
-            String correct = binding.newImageCorrectAnswer.getText().toString();
+            String correct = binding.newQCorrect.getEditText().getText().toString();
             String incorrect1 = binding.newQIncorrect1.getEditText().getText().toString();
             String incorrect2 = binding.newQIncorrect2.getEditText().getText().toString();
             QuizQuestion q = new QuizQuestion(imageUri, correct, incorrect1, incorrect2);
@@ -59,5 +59,13 @@ public class NewQuestionTextFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (getActivity() instanceof GalleryActivity) {
+            ((GalleryActivity) getActivity()).updateRecyclerView();
+        }
     }
 }

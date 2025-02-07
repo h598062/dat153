@@ -19,12 +19,10 @@ import java.util.List;
 import no.hvl.dat153.quizapp.R;
 
 public class QuizQuestionAdapter extends RecyclerView.Adapter<QuizQuestionAdapter.ViewHolder> {
-    private final List<QuizQuestion> quizQuestions;
 
     private static final String TAG = "QuizQuestionAdapter";
 
-    public QuizQuestionAdapter(List<QuizQuestion> quizQuestions) {
-        this.quizQuestions = quizQuestions;
+    public QuizQuestionAdapter() {
     }
 
     @NonNull
@@ -37,16 +35,10 @@ public class QuizQuestionAdapter extends RecyclerView.Adapter<QuizQuestionAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        QuizQuestion question = quizQuestions.get(position);
-        if (question.getQuestionImage() != null) {
-            holder.imageView.setImageResource(question.getQuestionImage());
-        } else if (question.getImageUri() != null) {
-            holder.imageView.setImageURI(Uri.parse(question.getImageUri()));
-        } else {
-            holder.imageView.setImageDrawable(AppCompatResources.getDrawable(holder.imageView.getContext(), R.drawable.ic_launcher_background));
-            holder.imageView.setColorFilter(Color.GRAY);
-            Log.d(TAG, "onBindViewHolder: Quiz question has no image...");
-        }
+        QuizQuestion question = Gallery.getInstance().getQuestions().get(position);
+
+        holder.imageView.setImageURI(question.getImageUri());
+
         holder.correctAnswer.setText(question.getCorrectAnswer());
         holder.incorrectAnswer1.setText(question.getIncorrectAnswers()[0]);
         holder.incorrectAnswer2.setText(question.getIncorrectAnswers()[1]);
@@ -63,7 +55,7 @@ public class QuizQuestionAdapter extends RecyclerView.Adapter<QuizQuestionAdapte
 
     @Override
     public int getItemCount() {
-        return quizQuestions.size();
+        return Gallery.getInstance().getQuestions().size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

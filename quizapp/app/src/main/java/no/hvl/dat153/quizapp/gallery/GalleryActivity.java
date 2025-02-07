@@ -1,41 +1,39 @@
 package no.hvl.dat153.quizapp.gallery;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import no.hvl.dat153.quizapp.help.Gallery;
-import no.hvl.dat153.quizapp.help.QuizQuestionAdapter;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+
 import no.hvl.dat153.quizapp.R;
 import no.hvl.dat153.quizapp.databinding.ActivityGalleryBinding;
+import no.hvl.dat153.quizapp.help.Gallery;
+import no.hvl.dat153.quizapp.help.QuizQuestionAdapter;
 
 public class GalleryActivity extends AppCompatActivity {
     private static final String TAG = "GalleryActivity";
     private ActivityGalleryBinding binding;
-
-    private static final int REQUEST_CODE_PERMISSIONS = 1001;
     private static final int REQUEST_CODE_OPEN_DOCUMENT = 1002;
-    private static final String[] REQUIRED_PERMISSIONS = {
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-    };
+    private static final int REQUEST_CODE_TAKE_PICTURE = 1003;
+    private Uri photoUri;
+
+    private int gallerySize = Gallery.getInstance().getQuestions().size();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +48,11 @@ public class GalleryActivity extends AppCompatActivity {
             return insets;
         });
 
-        if (allPermissionsGranted()) {
-            // Permissions are already granted, proceed with your logic
-        } else {
-            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
-        }
 
         RecyclerView rv = binding.galleryItemContainer;
         rv.setLayoutManager(new LinearLayoutManager(this));
-        QuizQuestionAdapter adapter = new QuizQuestionAdapter(Gallery.getInstance().getQuestions());
+        QuizQuestionAdapter adapter = new QuizQuestionAdapter();
         rv.setAdapter(adapter);
-
 
 
         binding.addGalleryImage.setOnClickListener(v -> {
@@ -68,13 +60,13 @@ public class GalleryActivity extends AppCompatActivity {
                     .setTitle("Add Image")
                     .setMessage("Add image from phone gallery or take a new picture?")
                     .setPositiveButton(R.string.image_dialog_select_gallery, (dialogInterface, which) -> {
-
+                        openDocument();
                     })
                     .setNeutralButton(R.string.image_dialog_camera, (dialogInterface, which) -> {
-
+                        takePicture();
                     })
                     .setNegativeButton(R.string.image_dialog_cancel, (dialogInterface, which) -> {
-
+                        dialogInterface.dismiss();
                     })
                     .create();
             dialog.show();
@@ -88,24 +80,49 @@ public class GalleryActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_OPEN_DOCUMENT);
     }
 
-    private boolean allPermissionsGranted() {
-        for (String permission : REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                return false;
+    private void takePicture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = createImageFile();
+            if (photoFile != null) {
+                photoUri = FileProvider.getUriForFile(this, "no.hvl.dat153.quizapp.provider", photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
             }
         }
-        return true;
     }
 
+    private File createImageFile() {
+        String timeStamp = LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                // Permissions granted, proceed with your logic
-            } else {
-                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
-                finish();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_OPEN_DOCUMENT && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri imageUri = data.getData();
+
+                // Get permanent read permission
+                getContentResolver().takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                // Handle the selected image URI
+                showCreateQuizQuestionDialog(imageUri);
+            }
+        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE && resultCode == RESULT_OK) {
+            if (data != null) {
+                // Handle the selected image URI
+                showCreateQuizQuestionDialog(photoUri);
             }
         }
     }
@@ -114,6 +131,10 @@ public class GalleryActivity extends AppCompatActivity {
         // open the newQuestionTextFragment dialog
         NewQuestionTextFragment dialog = NewQuestionTextFragment.newInstance(imageUri);
         dialog.show(getSupportFragmentManager(), "NewQuestionTextFragment");
+    }
+
+    public void updateRecyclerView() {
+        binding.galleryItemContainer.getAdapter().notifyDataSetChanged();
     }
 
 
