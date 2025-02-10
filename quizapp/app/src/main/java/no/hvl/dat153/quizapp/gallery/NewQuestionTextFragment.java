@@ -17,9 +17,8 @@ import no.hvl.dat153.quizapp.help.QuizQuestion;
 
 public class NewQuestionTextFragment extends DialogFragment {
 
-    private static final String TAG = "NewQuestionTextFragment";
     public static final String IMAGE_URI = "image_uri";
-
+    private static final String TAG = "NewQuestionTextFragment";
     private AddQuestionTextAnswersFragmentBinding binding;
 
 

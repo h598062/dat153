@@ -22,9 +22,8 @@ import no.hvl.dat153.quizapp.help.QuizQuestion;
 public class QuizActivity extends AppCompatActivity {
 
     public static final String EXTRA_QUESTION_AMOUNT = "EXTRA_QUESTION_AMOUNT";
-
-    private ActivityQuizBinding binding;
     private static final String TAG = "QuizActivity";
+    private ActivityQuizBinding binding;
     private Integer questionAmount = 1;
     private Integer currentQuestionIndex = 0;
     private Integer correctAnswers = 0;

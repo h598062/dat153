@@ -28,12 +28,12 @@ import no.hvl.dat153.quizapp.help.QuizQuestionAdapter;
 
 public class GalleryActivity extends AppCompatActivity {
     private static final String TAG = "GalleryActivity";
-    private ActivityGalleryBinding binding;
     private static final int REQUEST_CODE_OPEN_DOCUMENT = 1002;
     private static final int REQUEST_CODE_TAKE_PICTURE = 1003;
+    private ActivityGalleryBinding binding;
     private Uri photoUri;
 
-    private int gallerySize = Gallery.getInstance().getQuestions().size();
+    private final int gallerySize = Gallery.getInstance().getQuestions().size();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -22,12 +22,16 @@ import no.hvl.dat153.quizapp.quiz.QuizActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
     private static final String TAG = "MainActivity";
+    private ActivityMainBinding binding;
     private Integer questionAmount = 1;
 
     public Integer getQuestionAmount() {
         return questionAmount;
+    }
+
+    public void setQuestionAmount(Integer questionAmount) {
+        this.questionAmount = questionAmount;
     }
 
     @Override
@@ -49,10 +53,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         binding.quizQuestionsAmountSelector.setMax(Gallery.getInstance().getQuestions().size());
-    }
-
-    public void setQuestionAmount(Integer questionAmount) {
-        this.questionAmount = questionAmount;
     }
 
     @Override
@@ -91,9 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
     private SeekBar.OnSeekBarChangeListener getListener(MainActivity mainActivity) {
         return new SeekBar.OnSeekBarChangeListener() {
-            private final MainActivity parentActivity = mainActivity;
             private static final String TAG = "ProgressBar";
-
+            private final MainActivity parentActivity = mainActivity;
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

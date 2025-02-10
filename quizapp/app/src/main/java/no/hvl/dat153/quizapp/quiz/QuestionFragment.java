@@ -17,14 +17,11 @@ import no.hvl.dat153.quizapp.databinding.FragmentQuestionBinding;
  */
 public class QuestionFragment extends Fragment {
 
+    public static final String ARG_RESULT = "answer";
+    public static final String FRAGMENT_RESULT = "answer";
     private static final String TAG = "QuestionFragment";
     private static final String ARG_QUIZIMAGE = "QuizImageResource";
     private static final String ARG_QUIZANSWER = "QuizAnswer";
-
-    public static final String ARG_RESULT = "answer";
-    public static final String FRAGMENT_RESULT = "answer";
-
-
     private Uri quizImageUri;
     private String[] quizAnswer;
 
