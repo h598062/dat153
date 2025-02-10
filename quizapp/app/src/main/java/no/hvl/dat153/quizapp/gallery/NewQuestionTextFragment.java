@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import no.hvl.dat153.quizapp.databinding.AddQuestionTextAnswersFragmentBinding;
 import no.hvl.dat153.quizapp.help.Gallery;
 import no.hvl.dat153.quizapp.help.QuizQuestion;
-import no.hvl.dat153.quizapp.databinding.AddQuestionTextAnswersFragmentBinding;
 
 public class NewQuestionTextFragment extends DialogFragment {
 

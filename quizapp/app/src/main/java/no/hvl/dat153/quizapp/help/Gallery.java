@@ -9,6 +9,7 @@ import java.util.List;
 public class Gallery {
     private static final Gallery instance = new Gallery();
     private final List<QuizQuestion> list;
+
     private Gallery() {
         this.list = new ArrayList<>();
         Log.d("GallerySingleton", "I have Arrived!");

@@ -1,8 +1,5 @@
 package no.hvl.dat153.quizapp.help;
 
-import android.graphics.Color;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.List;
 
 import no.hvl.dat153.quizapp.R;
 
@@ -28,8 +22,7 @@ public class QuizQuestionAdapter extends RecyclerView.Adapter<QuizQuestionAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.gallery_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -45,8 +38,7 @@ public class QuizQuestionAdapter extends RecyclerView.Adapter<QuizQuestionAdapte
         if (question.getIncorrectAnswers().length > 2) {
             // create more text views for more incorrect answers
             for (int i = 2; i < question.getIncorrectAnswers().length; i++) {
-                TextView textView = (TextView) LayoutInflater.from(holder.incorrectAnswers.getContext())
-                        .inflate(R.layout.gallery_incorrect_text_item, holder.incorrectAnswers, false);
+                TextView textView = (TextView) LayoutInflater.from(holder.incorrectAnswers.getContext()).inflate(R.layout.gallery_incorrect_text_item, holder.incorrectAnswers, false);
                 textView.setText(question.getIncorrectAnswers()[i]);
                 holder.incorrectAnswers.addView(textView);
             }

@@ -15,9 +15,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Locale;
 
-import no.hvl.dat153.quizapp.help.QuizQuestion;
 import no.hvl.dat153.quizapp.databinding.ActivityQuizBinding;
 import no.hvl.dat153.quizapp.help.Gallery;
+import no.hvl.dat153.quizapp.help.QuizQuestion;
 
 public class QuizActivity extends AppCompatActivity {
 

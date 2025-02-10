@@ -2,12 +2,11 @@ package no.hvl.dat153.quizapp.quiz;
 
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import no.hvl.dat153.quizapp.databinding.FragmentQuestionBinding;
 
