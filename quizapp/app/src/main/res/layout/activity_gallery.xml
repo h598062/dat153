@@ -29,11 +29,25 @@
             android:textSize="34sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/addGalleryImage"
-            android:layout_width="150dp"
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/addGalleryButton" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/addGalleryImage"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/addGalleryButton" />
+
+            <Button
+                android:id="@+id/sortGalleryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sortGalleryButton" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/galleryItemContainer"

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -33,7 +34,8 @@ public class GalleryActivity extends AppCompatActivity {
     private ActivityGalleryBinding binding;
     private Uri photoUri;
 
-    private final int gallerySize = Gallery.getInstance().getQuestions().size();
+    private int gallerySize = Gallery.getInstance().getQuestions().size();
+    private int sortDirection = 0; // 0 = unsorted, 1 = A-Z, 2 = Z-A
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,25 @@ public class GalleryActivity extends AppCompatActivity {
                     })
                     .setNegativeButton(R.string.image_dialog_cancel, (dialogInterface, which) -> {
                         dialogInterface.dismiss();
+                    })
+                    .create();
+            dialog.show();
+        });
+
+        binding.sortGalleryButton.setOnClickListener(v -> {
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle("Sort Gallery")
+                    .setMessage("Sort gallery from A-Z, Z-A or unsorted?")
+                    .setPositiveButton("A-Z", (dialogInterface, which) -> {
+                        sortDirection = 1;
+                        sortGallery();
+                    })
+                    .setNeutralButton("Z-A", (dialogInterface, which) -> {
+                        sortDirection = 2;
+                        sortGallery();
+                    })
+                    .setNegativeButton("Unsorted", (dialogInterface, which) -> {
+                        sortDirection = 0;
                     })
                     .create();
             dialog.show();
@@ -109,6 +130,7 @@ public class GalleryActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: no skjedde d nokke");
         if (requestCode == REQUEST_CODE_OPEN_DOCUMENT && resultCode == RESULT_OK) {
             if (data != null) {
                 Uri imageUri = data.getData();
@@ -133,8 +155,22 @@ public class GalleryActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "NewQuestionTextFragment");
     }
 
+    public void sortGallery() {
+        Gallery.getInstance().sortQuestions(sortDirection);
+        if (sortDirection == 0) {
+            sortDirection = 1;
+        } else if (sortDirection == 1) {
+            sortDirection = 2;
+        } else {
+            sortDirection = 0;
+        }
+        updateRecyclerView();
+    }
+
     public void updateRecyclerView() {
-        binding.galleryItemContainer.getAdapter().notifyDataSetChanged();
+        if (binding.galleryItemContainer.getAdapter() != null) {
+            binding.galleryItemContainer.getAdapter().notifyDataSetChanged();
+        }
     }
 
 
